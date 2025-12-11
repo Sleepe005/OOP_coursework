@@ -27,3 +27,17 @@ MainWindow::MainWindow(QWidget *parent)
     central->setLayout(rootLayout);
     setCentralWidget(central);
 }
+
+// --- Communicator functions ---
+// void MainWindow::fromCommunicator(QByteArray msg)
+// {
+//     qDebug() << "Пришли данные:" << msg;
+//     ui->textEdit->setText(QString(msg));
+// }
+
+// // куда-нибудь в кнопки:
+// void MainWindow::on_sendButton_clicked()
+// {
+//     emit toCommunicator(ui->lineEdit->text());
+// }
+

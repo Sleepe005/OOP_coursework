@@ -14,4 +14,11 @@ private:
     QGraphicsView *crossroadView;
     QGraphicsScene *crossroadScene;
     ControlPanel *controlPanel;
+
+signals:
+    void toCommunicator(QString msg);
+
+public slots:
+    void fromCommunicator(QByteArray msg);
+
 };
