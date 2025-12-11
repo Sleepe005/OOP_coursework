@@ -55,3 +55,11 @@ TrafficLightIndicator* ControlPanel::getTrafficLightIndicator() const {
 TimingSettings* ControlPanel::getTimingSettings() const {
     return timingSettings;
 }
+
+void ControlPanel::onMessage(QString msg)
+{
+    qDebug() << "Scene получила:" << msg;
+
+    // // пример
+    // setTrafficLight(0, Qt::green);
+}

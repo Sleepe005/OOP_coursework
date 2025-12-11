@@ -18,3 +18,11 @@ void CrossroadScene::setTrafficLight(int index, const QColor &color) {
     if(index < 0 || index > 3) return;
     trafficLights[index]->setBrush(QBrush(color));
 }
+
+void CrossroadScene::onMessage(QString msg)
+{
+    qDebug() << "Scene получила:" << msg;
+
+    // пример
+    setTrafficLight(0, Qt::green);
+}

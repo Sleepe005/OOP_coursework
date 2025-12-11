@@ -12,12 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *topLayout = new QHBoxLayout();
     crossroadView = new QGraphicsView();
     crossroadView->setMinimumSize(800, 500);
-    // crossroadScene = new QGraphicsScene();
-    // crossroadView->setScene(crossroadScene);
-    crossroadScene = new CrossroadScene();
+
+    crossroadScene = new CrossroadScene(this);
     crossroadView->setScene(crossroadScene);
 
-    controlPanel = new ControlPanel();
+    controlPanel = new ControlPanel(this);
 
     topLayout->addWidget(crossroadView);
     topLayout->addWidget(controlPanel);
@@ -28,16 +27,39 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(central);
 }
 
-// --- Communicator functions ---
-// void MainWindow::fromCommunicator(QByteArray msg)
-// {
-//     qDebug() << "Пришли данные:" << msg;
-//     ui->textEdit->setText(QString(msg));
-// }
+void MainWindow::setCommunicator(TCommunicator *c)
+{
+    comm = c;
 
-// // куда-нибудь в кнопки:
-// void MainWindow::on_sendButton_clicked()
-// {
-//     emit toCommunicator(ui->lineEdit->text());
-// }
+    //
+    // ControlPanel → Communicator
+    //
+    connect(controlPanel, &ControlPanel::sendMessage,
+            comm, [&](QString s){
+                comm->send(s.toUtf8());
+            });
 
+    //
+    // Communicator → ControlPanel
+    //
+    connect(comm, &TCommunicator::recieved,
+            controlPanel, [&](QByteArray a){
+                controlPanel->onMessage(QString(a));
+            });
+
+    //
+    // CrossroadScene → Communicator
+    //
+    connect(crossroadScene, &CrossroadScene::sendMessage,
+            comm, [&](QString s){
+                comm->send(s.toUtf8());
+            });
+
+    //
+    // Communicator → CrossroadScene
+    //
+    connect(comm, &TCommunicator::recieved,
+            crossroadScene, [&](QByteArray a){
+                crossroadScene->onMessage(QString(a));
+            });
+}

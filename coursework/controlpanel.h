@@ -19,4 +19,11 @@ private:
     QPushButton *manualBtn;
     TrafficLightIndicator *trafficLight;
     TimingSettings *timingSettings;
+
+signals:
+    void sendMessage(QString msg);
+
+public slots:
+    void onMessage(QString msg);
+
 };

@@ -4,21 +4,18 @@
 #include <QGraphicsScene>
 #include "ControlPanel.h"
 #include "CrossroadScene.h"
+#include "comm/communicator.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    void setCommunicator(TCommunicator *c);
 
 private:
     QGraphicsView *crossroadView;
-    QGraphicsScene *crossroadScene;
+    CrossroadScene *crossroadScene;
     ControlPanel *controlPanel;
 
-signals:
-    void toCommunicator(QString msg);
-
-public slots:
-    void fromCommunicator(QByteArray msg);
-
+    TCommunicator *comm;
 };

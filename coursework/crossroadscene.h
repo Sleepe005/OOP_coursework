@@ -15,4 +15,11 @@ private:
     QGraphicsRectItem *roadHorizontal;
     QGraphicsRectItem *roadVertical;
     QGraphicsEllipseItem *trafficLights[4]; // четыре светофора
+
+signals:
+    void sendMessage(QString msg);
+
+public slots:
+    void onMessage(QString msg);
+
 };

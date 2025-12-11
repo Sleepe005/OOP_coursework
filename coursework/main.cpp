@@ -20,22 +20,14 @@ int main(int argc, char *argv[])
     }
     MainWindow w;
 
-    // Параметры коммуникатора
+    // параметры коммуникатора
     TCommParams pars = {
-        QHostAddress("127.0.0.1"), 10001,  // прием
-        QHostAddress("127.0.0.1"), 10000   // отправка
+        QHostAddress("127.0.0.1"), 10001,
+        QHostAddress("127.0.0.1"), 10000
     };
 
     TCommunicator *comm = new TCommunicator(pars, &w);
-
-    // Соединяем MainWindow и Communicator
-    QObject::connect(comm, &TCommunicator::recieved,
-                     &w, &MainWindow::fromCommunicator);
-
-    QObject::connect(&w, &MainWindow::toCommunicator,
-                     comm, [&](QString msg){
-                         comm->send(msg.toUtf8());
-                     });
+    w.setCommunicator(comm);
 
     w.show();
     return a.exec();
